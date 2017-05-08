@@ -1,0 +1,9 @@
+module <%= moduleName %> exposing (..)
+
+<% imports.map(module => { -%>
+import <%= module.name %><%= module.exposing.length > 0 ? " exposing (" + module.exposing.join(", ") + ")" : "" %>
+<% }) -%>
+
+main : Html msg
+main =
+    Html.div [] [ Html.text "Hello from <%= moduleName %>" ]
