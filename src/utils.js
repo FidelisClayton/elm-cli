@@ -25,3 +25,31 @@ export const unescapeValues = (object) => {
 
   return newObject
 }
+
+const splice = (index, rem, replacement, string) => {
+  return string.slice(0, index) + replacement + string.slice(index + Math.abs(rem));
+};
+
+const replaceAt = (index, replacement, string) => {
+  return string.substr(0, index) + replacement+ string.substr(index + replacement.length);
+}
+
+export const formatRecord = (record) => {
+  let newRecord = record
+  let canBreak = true
+
+  for (let i = 1; i < newRecord.length; i ++) {
+    const char = newRecord.charAt(i)
+
+    if (char === "{") canBreak = false
+    if (char === "}") canBreak = true
+
+    if (char === "," && canBreak) {
+      newRecord = replaceAt(i, " ", newRecord) // SHAME
+      newRecord = splice(i + 1, 0, "\n    Ω", newRecord) // SHAME
+    }
+  }
+
+  newRecord = newRecord.replace(/Ω/g, ",") // SHAME
+  return newRecord.substring(0, newRecord.length - 1) + "\n    }"
+}
