@@ -2,7 +2,12 @@ const fs = require("fs")
 const ejs = require("ejs")
 const meow = require("meow")
 
-const elmCli = require("./src/elm-cli")
+import elmCli from './src/elm-cli'
+
+import eventEmitter from './src/event-emitter'
+import dispatcher from './src/dispatch'
+
+dispatcher(eventEmitter)
 
 const cli = meow(`
   Usage
@@ -30,3 +35,4 @@ ejs.renderFile('./main.ejs', { moduleName: "Main" }, function(err, data) {
     })
   }
 })
+
