@@ -1,6 +1,7 @@
 import { askVersion, askModule, askCore } from './prompts'
 import { showTypeAliases, showTypes, showValues } from './docs'
 import { fetchPackage, fetchVersions } from './api'
+import { matchNameOnModule } from './utils'
 
 export default (eventEmitter) => {
   eventEmitter.on('elm-cli', (event) => {
@@ -14,10 +15,27 @@ export default (eventEmitter) => {
       }
 
       case 'fetch-package': {
-        const { packageName, version } = event.payload
+        const { packageName, version, query } = event.payload
 
-        fetchPackage(packageName, version)
-          .then(askModule)
+        if (query) {
+          fetchPackage(packageName, version)
+            .then(packages => matchNameOnModule(query, packages))
+            .then(data => {
+              showTypeAliases({ module: data })
+              return data
+            })
+            .then(data => {
+              showTypes({ module: data })
+              return data
+            })
+            .then(data => {
+              showValues({ module: data })
+              return data
+            })
+        } else {
+          fetchPackage(packageName, version)
+            .then(askModule)
+        }
         break
       }
 

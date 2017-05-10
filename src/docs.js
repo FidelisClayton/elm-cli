@@ -39,7 +39,6 @@ export const showTypes = (data) => {
       type.comment.trim()
 
     print(marked(msg))
-
   })
 }
 
@@ -48,12 +47,15 @@ export const showValues = (data) => {
   const { values } = module
 
   values.map(value => {
-    const msg = 
-      `${chalk.blue.underline(value.name)} : ${value.type} \n\n` +
+    const isRecord = value.type.charAt(0) === "{"
+
+    const type = isRecord ? "```" + formatRecord(value.type) + "```" : value.type
+
+    const msg =
+      `${chalk.blue.underline(value.name)} : \n` +
+      "    " + type  + "\n\n" +
       chalk.cyan(value.comment.trim())
 
     print(marked(msg))
   })
-
-
 }

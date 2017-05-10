@@ -51,7 +51,9 @@ export const formatRecord = (record) => {
   }
 
   newRecord = newRecord.replace(/Ω/g, ",") // SHAME
-  return newRecord.substring(0, newRecord.length - 1) + "\n    }"
+  newRecord = splice(newRecord.lastIndexOf("}"), 0, "\n    ", newRecord)
+
+  return newRecord
 }
 
 const generateSubTypesAnotation = (subTypes) => {
@@ -77,4 +79,28 @@ export const generateTypeField = (type) => {
         return previous + `    | ${current[0]} ${subTypesAnotation}\n`
       }
     }, "")
+}
+
+const matchName = (name, items) =>
+  items.filter(item => {
+    return new RegExp(name, "ig").test(item.name)
+  })
+
+export const matchNameOnModule = (name, packages) => {
+  const moduleOptions =
+    packages.reduce((previous, _package) => {
+      const { values, types, aliases } = _package
+
+      return {
+        values: [ ...previous.values, ...values ],
+        types: [ ...previous.types, ...types ],
+        aliases: [ ...previous.aliases, ...aliases ]
+      }
+    }, { values: [], types: [], aliases: [] })
+
+  return {
+    values: matchName(name, moduleOptions.values),
+    types: matchName(name, moduleOptions.types),
+    aliases: matchName(name, moduleOptions.aliases)
+  }
 }

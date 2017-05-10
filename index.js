@@ -2,6 +2,8 @@ const fs = require("fs")
 const ejs = require("ejs")
 const meow = require("meow")
 
+import inquirer from 'inquirer'
+
 import elmCli from './src/elm-cli'
 
 import eventEmitter from './src/event-emitter'
@@ -15,8 +17,12 @@ const description =
       $ foo <input>
 
     Options
-      --import, -i  Import a package
-      --version, -v Specify version of the package
+      generate
+        --import, -i  Import a package
+
+      docs
+        --version, -v Specify version of the package
+        --query, -q Specify a Type alias, type or value to search on docs
 
     Examples
       $ foo unicorns --rainbow
@@ -29,7 +35,8 @@ const cli = meow({
   }, {
   alias: {
     i: 'import',
-    v: 'version'
+    v: 'version',
+    q: 'query'
   }
 });
 

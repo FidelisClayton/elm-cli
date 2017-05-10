@@ -17,7 +17,8 @@ export default (cli) => {
           type: 'fetch-package',
           payload: {
             packageName: cli.input[1],
-            version: cli.flags.version
+            version: cli.flags.version,
+            query: cli.flags.query
           }
         })
       } else {
