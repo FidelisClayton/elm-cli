@@ -9,7 +9,7 @@ export const fetchVersions = packageName => {
   const url = fetchVersionsUrl(packageName)
 
   return axios.get(url)
-          .then(res => res.data)
+          .then(res => ({ packageName, versions: res.data }))
 }
 
 export const fetchPackage = (packageName, version) => {

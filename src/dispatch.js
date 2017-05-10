@@ -1,20 +1,25 @@
 import { askVersion, askModule, askCore } from './prompts'
 import { showTypeAliases, showTypes, showValues } from './docs'
-import { fetchPackage } from './api'
+import { fetchPackage, fetchVersions } from './api'
 
 export default (eventEmitter) => {
   eventEmitter.on('elm-cli', (event) => {
     switch (event.type) {
-      case 'ask-versions':
-        askVersion(event.payload)
-        break
+      case 'fetch-package-versions': {
+        const packageName = event.payload.packageName
 
-      case 'fetch-package':
+        fetchVersions(packageName)
+          .then(askVersion)
+        break
+      }
+
+      case 'fetch-package': {
         const { packageName, version } = event.payload
 
         fetchPackage(packageName, version)
           .then(askModule)
         break
+      }
 
       case 'ask-core':
         askCore(event.payload)

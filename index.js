@@ -9,30 +9,28 @@ import dispatcher from './src/dispatch'
 
 dispatcher(eventEmitter)
 
-const cli = meow(`
-  Usage
-    $ foo <input>
+const description =
+  `
+    Usage
+      $ foo <input>
 
-  Options
-    --import, -i  Import a package
+    Options
+      --import, -i  Import a package
+      --version, -v Specify version of the package
 
-  Examples
-    $ foo unicorns --rainbow
-    🌈 unicorns 🌈
-`, {
+    Examples
+      $ foo unicorns --rainbow
+      🌈 unicorns 🌈
+  `
+
+const cli = meow({
+    description,
+    version: false
+  }, {
   alias: {
-    i: 'import'
+    i: 'import',
+    v: 'version'
   }
 });
 
 elmCli(cli)
-
-
-ejs.renderFile('./main.ejs', { moduleName: "Main" }, function(err, data) {
-  if (!err) {
-    fs.writeFile("./Main.elm", data, function(err) {
-      err ? console.log(err) : console.log("file writed")
-    })
-  }
-})
-
