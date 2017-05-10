@@ -45,5 +45,15 @@ export const showTypes = (data) => {
 
 export const showValues = (data) => {
   const { module } = data
-  console.log("values")
+  const { values } = module
+
+  values.map(value => {
+    const msg = 
+      `${chalk.blue.underline(value.name)} : ${value.type} \n\n` +
+      chalk.cyan(value.comment.trim())
+
+    print(marked(msg))
+  })
+
+
 }
