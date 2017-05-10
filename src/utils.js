@@ -53,3 +53,28 @@ export const formatRecord = (record) => {
   newRecord = newRecord.replace(/Ω/g, ",") // SHAME
   return newRecord.substring(0, newRecord.length - 1) + "\n    }"
 }
+
+const generateSubTypesAnotation = (subTypes) => {
+  return subTypes.map(subType => {
+      const subTypeLength = subType.split(" ").length
+
+      if (subTypeLength > 1)
+        return `(${subType})`
+      else
+        return subType
+    }).join(" ")
+}
+
+export const generateTypeField = (type) => {
+  return type.cases.reduce((previous, current, index) => {
+      const subTypes = current[1]
+
+      const subTypesAnotation = generateSubTypesAnotation(subTypes)
+
+      if (index === 0) {
+        return previous + `    = ${current[0]} ${subTypesAnotation} \n`
+      } else {
+        return previous + `    | ${current[0]} ${subTypesAnotation}\n`
+      }
+    }, "")
+}
