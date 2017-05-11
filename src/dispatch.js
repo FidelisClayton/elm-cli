@@ -22,15 +22,8 @@ export default (eventEmitter) => {
             .then(packages => matchNameOnModule(query, packages))
             .then(data => {
               showTypeAliases({ module: data })
-              return data
-            })
-            .then(data => {
               showTypes({ module: data })
-              return data
-            })
-            .then(data => {
               showValues({ module: data })
-              return data
             })
         } else {
           fetchPackage(packageName, version)
