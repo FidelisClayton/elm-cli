@@ -1,5 +1,5 @@
-import generateModule from './functions/generate-module'
-import fetchDocs from './functions/fetch-docs'
+import generateModule from './generate/module'
+import generateProgram from './generate/program'
 import eventEmitter from './event-emitter'
 
 export default (cli) => {
@@ -7,9 +7,27 @@ export default (cli) => {
   const flags = cli.flags
 
   switch(input) {
-    case "generate":
-      generateModule(flags)
-      break;
+    case "generate": {
+      if (cli.flags.hasOwnProperty('template')) {
+        switch(flags.template) {
+          case "program": {
+            generateProgram(cli)
+            break;
+          }
+
+          case "view": {
+            generateModule(cli)
+          }
+
+          default:
+            generateModule(cli)
+        }
+      } else {
+        generateModule(cli)
+      }
+
+      break
+    }
 
     case "docs":
       if (cli.flags.hasOwnProperty('version')) {

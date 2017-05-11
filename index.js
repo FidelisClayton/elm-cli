@@ -19,14 +19,16 @@ const description =
     Options
       generate
         --import, -i  Import a package
+        --template, -t Specify the template
 
       docs
         --version, -v Specify version of the package
         --query, -q Specify a Type alias, type or value to search on docs
 
     Examples
-      $ foo unicorns --rainbow
-      🌈 unicorns 🌈
+      $ elm-cli docs rtfeldman/elm-css
+      $ elm-cli generate Main -i Html -i Html.Events
+      $ elm-cli generate Main -i Html.Events[onClick,onInput] -t program
   `
 
 const cli = meow({
@@ -36,7 +38,9 @@ const cli = meow({
   alias: {
     i: 'import',
     v: 'version',
-    q: 'query'
+    q: 'query',
+    m: 'module',
+    t: 'template'
   }
 });
 

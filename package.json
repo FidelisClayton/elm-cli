@@ -13,10 +13,13 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
     "ejs": "^2.5.6",
     "mkdirp": "^0.5.1",
     "node-mkdirp": "0.0.1",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "transform-runtime": "0.0.0"
   },
   "dependencies": {
     "ansi-escapes": "^2.0.0",

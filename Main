@@ -1,0 +1,8 @@
+module  exposing (..)
+
+import Html
+import Html.Events exposing (onClick, onInput)
+
+main : Html msg
+main =
+    Html.div [] [ Html.text "Hello from " ]

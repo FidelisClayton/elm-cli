@@ -104,3 +104,21 @@ export const matchNameOnModule = (name, packages) => {
     aliases: matchName(name, moduleOptions.aliases)
   }
 }
+
+export const extractModuleInfo = module => {
+  const moduleName = module.split("[")[0]
+  const exposing =
+    module
+      .split("[")
+      .pop()
+      .split("]")
+      .shift()
+      .split(",")
+
+  if (exposing.length > 1) {
+    return { name: moduleName, exposing }
+  }
+
+  return { name: moduleName, exposing: [] }
+
+}
